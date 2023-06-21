@@ -1,14 +1,22 @@
 import { useState } from 'react';
 import '../styles/App.scss';
-/*import '../styles/main.scss';*/
+import '../styles/main.scss';
 
 
 function App() {
-  const [numberOfErrors, setNumberOfErrors] = useState('');
+  const [numberOfErrors, setNumberOfErrors] = useState(0);
+  const [lastLetter, setLastLetter] = useState('');
   const handleClick = (event) => {
-    // HACER BUCLE
-    setNumberOfErrors(2);
+  console.log(numberOfErrors);
+  setNumberOfErrors(numberOfErrors+1); 
+
+
   }
+  const handleLetter = (ev) =>{
+   setLastLetter(ev.target.value);
+  }
+
+
   return (
     <div className='page'>
       <header>
@@ -53,6 +61,9 @@ function App() {
               type='text'
               name='last-letter'
               id='last-letter'
+              onChange={handleLetter}
+              value={lastLetter}
+      
             />
           </form>
         </section>
