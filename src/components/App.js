@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import '../styles/main.scss';
 
-
 function App() {
   const [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setLastLetter] = useState('');
@@ -10,23 +9,34 @@ function App() {
 
   const renderSolutionLetters = () => {
     const wordLetters = word.split('');
-    return wordLetters.map((letter, i) => 
-      (<li className='letter' key={i}></li>)
-    )
-  }
-
+    return wordLetters.map((letter, i) => {
+      //Un li vacío si la letra de word no está en userLetters 
+      console.log(letter);
+      if (userLetters.includes(letter)) {
+        return (
+          <li className='letter' key={i}>
+            {letter}
+          </li>
+        )
+      } else {
+        return <li className='letter' key={i}></li>;
+      }
+    });
+  };
   const handleClick = (event) => {
-  console.log(numberOfErrors);
-  setNumberOfErrors(numberOfErrors+1); 
-  }
-  const handleLetter = (ev) =>{
+    console.log(numberOfErrors);
+    setNumberOfErrors(numberOfErrors + 1);
+  };
+  const handleLetter = (ev) => {
     const pattern = new RegExp('^[a-zA-Z]+$');
-    if (pattern.test(ev.target.value)) {
+    console.log(ev.target.value);
+    if (pattern.test(ev.target.value) || ev.target.value === '') {
       setLastLetter(ev.target.value);
-      setUserLetters([...userLetters, lastLetter]);
-      console.log(userLetters);
+      if (ev.target.value !== '') {
+        setUserLetters([...userLetters, ev.target.value]);
+      }
     }
-  }
+  };
 
   return (
     <div className='page'>
@@ -39,9 +49,7 @@ function App() {
           <div className='solution'>
             <h2 className='title'>Solución:</h2>
 
-            <ul className='letters'>
-              {renderSolutionLetters()}
-            </ul>
+            <ul className='letters'>{renderSolutionLetters()}</ul>
           </div>
           <div className='error'>
             <h2 className='title'>Letras falladas:</h2>
